@@ -45,7 +45,7 @@ namespace FreshFishDesktopMVVM.Helpers
         {
             await client
                 .Child("freshfish/")//звернення до вузла продуктів
-                .PostAsync(new Products()//додаємо передані в параметри методу дані на сервер
+                .PostAsync(new Products()
                 {
                     ID = GetRandomId(),//отримання нового згенерованого айді
                     ProductName = productNameValue,
