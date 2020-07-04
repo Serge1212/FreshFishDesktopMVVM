@@ -1,0 +1,68 @@
+﻿<Window
+    x:Class="FreshFishDesktopMVVM.Views.SelectedProductWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:FreshFishDesktopMVVM.Views"
+    mc:Ignorable="d"
+    x:Name="selectedProductWindow"
+    Title="SelectedProduct"
+    Height="350"
+    Width="400">
+    <Grid>
+        <Grid.BindingGroup>
+            <BindingGroup
+                x:Name="bindingGroup" />
+        </Grid.BindingGroup>
+        <StackPanel
+            DataContext="{Binding SelectedProduct}">
+            <TextBlock
+                Text="Product Name" />
+            <TextBox
+                Text="{Binding Path=ProductName, UpdateSourceTrigger=PropertyChanged}"
+                Width="250"
+                Height="30" />
+            <TextBlock
+                Text="Price" />
+            <TextBox
+                Text="{Binding Path=Price, UpdateSourceTrigger=PropertyChanged}"
+                Width="250"
+                Height="30" />
+            <TextBlock
+                Text="Status" />
+            <TextBox
+                Text="{Binding Path=Status, UpdateSourceTrigger=PropertyChanged}"
+                Width="250"
+                Height="30" />
+            <TextBlock
+                Text="Date" />
+            <TextBox
+                Text="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}"
+                Width="250"
+                Height="30" />
+        </StackPanel>
+        <StackPanel
+            Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style
+                    TargetType="{x:Type Button}">
+                    <Setter
+                        Property="Margin"
+                        Value="60,200,0,0" />
+                    <Setter
+                        Property="Width"
+                        Value="100" />
+                    <Setter
+                        Property="Height"
+                        Value="50" />
+                </Style>
+            </StackPanel.Resources>
+            <Button
+                Command="{Binding SaveCommand}"
+                Content="Save" />
+            <Button
+                Content="Delete" />
+        </StackPanel>
+    </Grid>
+</Window>
