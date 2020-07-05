@@ -26,7 +26,6 @@
             UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
     <Grid
-        
         x:Name="ProductsTextBoxes"
         Background="#FFF0F0F0">
         <Grid.BindingGroup>
@@ -41,6 +40,7 @@
             Foreground="#FF014E81"
             Opacity="0.1" />
         <Grid
+            MouseDown="Grid_MouseDown"
             Height="30"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
@@ -166,7 +166,7 @@
                 BorderThickness="1.5"
                 BorderBrush="#FF7EC3E9">
                 <DatePicker
-                    Text="{Binding Path=Date, StringFormat='dd MMM yyyy'}"
+                    SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}"
                     Margin="0 1 0 0"
                     Foreground="#FF014E81"
                     materialDesign:HintAssist.FloatingScale="0.8"

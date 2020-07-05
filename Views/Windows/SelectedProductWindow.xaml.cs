@@ -27,5 +27,10 @@ namespace FreshFishDesktopMVVM.Views
         {
             Close();
         }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }
