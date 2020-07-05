@@ -380,7 +380,7 @@
                 </Border>
             </Border>
             <StackPanel
-                x:Name="DeleteProductStackPanel">
+                Visibility="{Binding isDeleteButtonHidden, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Border
                     Background="#FF7EC3E9"
                     Height="34"
@@ -393,8 +393,8 @@
                         CornerRadius="15"
                         Margin="5,-32,325,36">
                         <Button
-                            x:Name="ButtonDeleteProduct"
-                           
+                            Command="{Binding RemoveCommand}"
+                            CommandParameter="{Binding SelectedProduct}"
                             Focusable="False"
                             Height="30"
                             Width="60"

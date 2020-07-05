@@ -15,15 +15,8 @@ namespace FreshFishDesktopMVVM.ViewModels
         #region Fields  
         private ProductHelper productsHelper = new ProductHelper();
         private bool edited = true;
+        public bool isDeleteButtonHidden { get; set; }
         private Products _selectedProduct;
-        private Grid productTextBoxes;
-
-        public Grid ProductTextBoxes
-        {
-            get { return productTextBoxes; }
-            set { productTextBoxes = value; }
-        }
-
         #endregion
 
         #region Properties
@@ -43,6 +36,22 @@ namespace FreshFishDesktopMVVM.ViewModels
             get
             {
                 return saveCommand ??= new RelayCommand(SaveProduct);
+            }
+        }
+
+        private RelayCommand removeCommand;
+        public RelayCommand RemoveCommand
+        {
+            get
+            {
+                return removeCommand ??= new RelayCommand(async obj =>
+                {
+                    Products product = obj as Products;
+                    if (product != null)
+                    {
+                        await productsHelper.DeleteProduct(product.ID);
+                    }
+                });
             }
         }
         #endregion
@@ -79,6 +88,11 @@ namespace FreshFishDesktopMVVM.ViewModels
             {
                 SelectedProduct = new Products();
                 edited = false;
+                isDeleteButtonHidden = false;
+            }
+            else
+            {
+                isDeleteButtonHidden = true;
             }
             
         }
