@@ -19,13 +19,13 @@ namespace FreshFishDesktopMVVM.Models
 
                 switch (columnName)
                 {
-                    case "productname":
+                    case "ProductName":
                         if (string.IsNullOrEmpty(productname))
                         {
                             result = "Product name cannot be empty";
                         }
                         break;
-                    case "price":
+                    case "Price":
                         Regex regex = new Regex(@"^[0-9.]+$");//дозволяє тільки цифри і крапку
                         //Match match;
                         if (string.IsNullOrEmpty(price))
@@ -37,7 +37,7 @@ namespace FreshFishDesktopMVVM.Models
                             result = "Price can contain only digits and a single dot";
                         }
                         break;
-                    case "status":
+                    case "Status":
                         if (string.IsNullOrEmpty(status))
                         {
                             result = "Status cannot be empty";
@@ -53,9 +53,7 @@ namespace FreshFishDesktopMVVM.Models
 
                 OnPropertyChanged("ProductsErrorCollection");
 
-                if (result != null)
-                    return "!";
-                else return "";
+                return result == null ? string.Empty : "!";
             }
         }
 

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FreshFishDesktopMVVM.Views.Pages"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -58,8 +59,7 @@
                     Height="30"
                     Width="30">
                     <Button
-                        x:Name="ButtonAdd"
-                       
+                        Command="{Binding AddCommand}"
                         Background="{x:Null}"
                         Height="20"
                         Width="20"
@@ -81,9 +81,8 @@
                     Height="30"
                     Width="30">
                     <Button
-                        x:Name="ButtonEdit"
-                        
-                        IsEnabled="False"
+                        Command="{Binding EditCommand}"
+                        CommandParameter="{Binding SelectedProduct}"
                         Background="{x:Null}"
                         Height="20"
                         Width="20"
@@ -105,9 +104,8 @@
                     Height="30"
                     Width="30">
                     <Button
-                        x:Name="ButtonDelete"
-                   
-                        IsEnabled="False"
+                        Command="{Binding RemoveCommand}"
+                        CommandParameter="{Binding SelectedProduct}"
                         Background="{x:Null}"
                         Height="20"
                         Width="20"
@@ -187,11 +185,10 @@
                     CornerRadius="20"
                     Background="White" />
                 <DataGrid
-                    x:Name="ProductsDataGrid"
-                  
-                    IsReadOnly="True"
-                    FontFamily="Comic Sans MS"
+                    ItemsSource="{Binding ProductsCollection}"
+                    SelectedItem="{Binding SelectedProduct}"
                     FontSize="13"
+                    IsReadOnly="True"
                     FontWeight="DemiBold"
                     AutoGenerateColumns="False"
                     Margin="0"
@@ -199,21 +196,28 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Header="Product Name"
-                            Binding="{ Binding Path=productname}" />
+                            Binding="{Binding Path=ProductName}"/>
                         <DataGridTextColumn
                             Header="Price"
-                            Binding="{ Binding Path=price}" />
+                            Binding="{ Binding Path=Price}" />
                         <DataGridTextColumn
                             Header="Date"
-                            Binding="{ Binding Path=date}" />
+                            Binding="{ Binding Path=Date}" />
                         <DataGridTextColumn
                             Header="Status"
-                            Binding="{ Binding Path=status}" />
+                            Binding="{ Binding Path=Status}" />
                     </DataGrid.Columns>
                     <DataGrid.OpacityMask>
                         <VisualBrush
                             Visual="{Binding ElementName=Bdborder}" />
                     </DataGrid.OpacityMask>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger
+                            EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction
+                                Command="{Binding EditCommand}" />
+                        </i:EventTrigger>
+                        </i:Interaction.Triggers>
                 </DataGrid>
             </Grid>
         </Border>

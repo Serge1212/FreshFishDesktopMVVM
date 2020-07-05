@@ -22,5 +22,10 @@ namespace FreshFishDesktopMVVM.Views
         {
             InitializeComponent();
         }
+
+        private void Button_close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
