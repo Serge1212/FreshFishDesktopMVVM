@@ -35,7 +35,7 @@ namespace FreshFishDesktopMVVM.ViewModels
         {
             get
             {
-                return saveCommand ??= new RelayCommand(SaveProduct);
+                return saveCommand ??= new RelayCommand(SaveProduct, obj => SelectedProduct.CanSave == true);
             }
         }
 

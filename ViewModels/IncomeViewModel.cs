@@ -11,22 +11,23 @@ using System.Windows;
 
 namespace FreshFishDesktopMVVM.ViewModels
 {
-    internal class Rate
-    {
-        [JsonProperty("ccy")]
-        public string Ccy { get; set; }
-
-        [JsonProperty("base_ccy")]
-        public string BaseCcy { get; set; }
-
-        [JsonProperty("buy")]
-        public double Buy { get; set; }
-
-        [JsonProperty("sale")]
-        public string Sale { get; set; }
-    }
     public class IncomeViewModel : INotifyPropertyChanged
     {
+        class Rate
+        {
+            [JsonProperty("ccy")]
+            public string Ccy { get; set; }
+
+            [JsonProperty("base_ccy")]
+            public string BaseCcy { get; set; }
+
+            [JsonProperty("buy")]
+            public double Buy { get; set; }
+
+            [JsonProperty("sale")]
+            public string Sale { get; set; }
+        }
+
         private ProductHelper helper = new ProductHelper();
         List<Rate> rates;
         private double _calculatedIncome;

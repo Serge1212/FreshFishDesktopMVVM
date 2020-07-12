@@ -20,25 +20,27 @@ namespace FreshFishDesktopMVVM.Models
                 switch (columnName)
                 {
                     case "ProductName":
-                        if (string.IsNullOrEmpty(productname))
+                        if (string.IsNullOrEmpty(productname) && productNamechanged)
                         {
                             result = "Product name cannot be empty";
                         }
                         break;
                     case "Price":
                         Regex regex = new Regex(@"^[0-9.]+$");//дозволяє тільки цифри і крапку
-                        //Match match;
-                        if (string.IsNullOrEmpty(price))
+                        if (priceChanged)
                         {
-                            result = "Price cannot be empty";
-                        }
-                        else if (!regex.IsMatch(price))
-                        {
-                            result = "Price can contain only digits and a single dot";
+                            if (string.IsNullOrEmpty(price))
+                            {
+                                result = "Price cannot be empty";
+                            }
+                            else if (!regex.IsMatch(price))
+                            {
+                                result = "Price can contain only digits and a single dot";
+                            }
                         }
                         break;
                     case "Status":
-                        if (string.IsNullOrEmpty(status))
+                        if (string.IsNullOrEmpty(status) && statusChanged)
                         {
                             result = "Status cannot be empty";
                         }
@@ -51,12 +53,33 @@ namespace FreshFishDesktopMVVM.Models
                 else if (result != null)
                     ProductsErrorCollection.Add(columnName, result);
 
+                if (result != null) CanSave = false;
+                else CanSave = true;
+
                 OnPropertyChanged("ProductsErrorCollection");
 
                 return result == null ? string.Empty : "!";
+
+                
+            }
+        }
+        private bool canSave;
+        public bool CanSave
+        {
+            get
+            {
+                return canSave;
+            }
+            set
+            {
+                canSave = value;
+                OnPropertyChanged("CanSave");
             }
         }
 
+        private bool productNamechanged = false;
+        private bool priceChanged = false;
+        private bool statusChanged = false;
         private string id { get; set; }
         private string productname { get; set; }
         private string price { get; set; }
@@ -80,6 +103,7 @@ namespace FreshFishDesktopMVVM.Models
             {
                 productname = value;
                 OnPropertyChanged("ProductName");
+                productNamechanged = true;
             }
         }
 
@@ -90,6 +114,7 @@ namespace FreshFishDesktopMVVM.Models
             {
                 price = value;
                 OnPropertyChanged("Price");
+                priceChanged = true;
             }
         }
 
@@ -110,6 +135,7 @@ namespace FreshFishDesktopMVVM.Models
             {
                 status = value;
                 OnPropertyChanged("Status");
+                statusChanged = true;
             }
         }
 
