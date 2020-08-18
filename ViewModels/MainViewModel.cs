@@ -1,4 +1,6 @@
 ﻿using FreshFishDesktopMVVM.Models;
+using FreshFishDesktopMVVM.Utilities;
+using FreshFishDesktopMVVM.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +12,7 @@ using System.Windows.Input;
 
 namespace FreshFishDesktopMVVM.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ObservableObject
     {
         private Page ProductsPage;
         private Page WorkersPage;
@@ -99,7 +101,7 @@ namespace FreshFishDesktopMVVM.ViewModels
             {
                 return openChartsPage ??= new RelayCommand((obj) =>
                 {
-                    CurrentPage = ChartsPage;
+                    CurrentPage = new ChartsPage();
                     Index = 3;
                 });
             }
@@ -115,13 +117,6 @@ namespace FreshFishDesktopMVVM.ViewModels
                     Index = 4;
                 });
             }
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

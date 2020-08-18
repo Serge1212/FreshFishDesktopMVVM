@@ -1,5 +1,6 @@
 ﻿using FreshFishDesktopMVVM.Helpers;
 using FreshFishDesktopMVVM.Models;
+using FreshFishDesktopMVVM.Utilities;
 using GalaSoft.MvvmLight.Command;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace FreshFishDesktopMVVM.ViewModels
 {
-    public class SelectedProductViewModel : INotifyPropertyChanged
+    public class SelectedProductViewModel : ObservableObject
     {
         #region Fields  
         private ProductHelper productsHelper = new ProductHelper();
@@ -97,12 +98,5 @@ namespace FreshFishDesktopMVVM.ViewModels
             
         }
 
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-        #endregion
     }
 }

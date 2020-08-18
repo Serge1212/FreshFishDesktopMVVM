@@ -1,4 +1,5 @@
 ﻿using FreshFishDesktopMVVM.ViewModels;
+using FreshFishDesktopMVVM.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace FreshFishDesktopMVVM
 {
     /// <summary>
@@ -27,7 +29,9 @@ namespace FreshFishDesktopMVVM
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+
+            this.DataContext = new WindowViewModel(this);
+            MainFrame.Content = new MainPage();
         }
 
     }

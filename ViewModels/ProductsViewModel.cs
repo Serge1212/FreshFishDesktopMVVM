@@ -1,6 +1,7 @@
 ﻿using Firebase.Database;
 using FreshFishDesktopMVVM.Helpers;
 using FreshFishDesktopMVVM.Models;
+using FreshFishDesktopMVVM.Utilities;
 using FreshFishDesktopMVVM.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -10,12 +11,12 @@ using System.Runtime.CompilerServices;
 
 namespace FreshFishDesktopMVVM.ViewModels
 {
-    public class ProductsViewModel : INotifyPropertyChanged
+    public class ProductsViewModel : ObservableObject
     {
 
         private ProductHelper productHelper = new ProductHelper();
         static bool executed = true;
-        public ObservableCollection<Products> ProductsCollection { get; set; }
+        public  ObservableCollection<Products> ProductsCollection { get; set; }
         private Products _selectedProduct;
         public Products SelectedProduct
         {
@@ -96,10 +97,6 @@ namespace FreshFishDesktopMVVM.ViewModels
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-           PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
+      
     }
 }

@@ -53,8 +53,14 @@ namespace FreshFishDesktopMVVM.Models
                 else if (result != null)
                     ProductsErrorCollection.Add(columnName, result);
 
-                if (result != null) CanSave = false;
-                else CanSave = true;
+                if (result != null)
+                {
+                    CanSave = false;
+                }
+                else
+                {
+                    CanSave = true;
+                }
 
                 OnPropertyChanged("ProductsErrorCollection");
 

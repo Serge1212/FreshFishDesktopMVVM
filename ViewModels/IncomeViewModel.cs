@@ -1,4 +1,5 @@
 ﻿using FreshFishDesktopMVVM.Helpers;
+using FreshFishDesktopMVVM.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace FreshFishDesktopMVVM.ViewModels
 {
-    public class IncomeViewModel : INotifyPropertyChanged
+    public class IncomeViewModel : ObservableObject
     {
         class Rate
         {
@@ -124,8 +125,8 @@ namespace FreshFishDesktopMVVM.ViewModels
             {
                 Dollar = "0";
                 Euro = "0";
-                Ruble= "0";
-                Bitcoin= "0";
+                Ruble = "0";
+                Bitcoin = "0";
 
                 MessageBox.Show("Не вдалося конвертувати валюти!");
             }
@@ -143,10 +144,5 @@ namespace FreshFishDesktopMVVM.ViewModels
             return JsonConvert.DeserializeObject<List<Rate>>(json);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }

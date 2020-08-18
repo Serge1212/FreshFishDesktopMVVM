@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreshFishDesktopMVVM.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace FreshFishDesktopMVVM.Models
 {
-    public class Workers : INotifyPropertyChanged, IDataErrorInfo
+    public class Workers : ObservableObject, IDataErrorInfo
     {
         #region Data Validation
         //Поле, яке слугує для відправки винятків при некоректному вводі, в даному випадку, воно нічого не відправляє, так як не потрібно:
@@ -213,12 +214,7 @@ namespace FreshFishDesktopMVVM.Models
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;//Подія, яка буде відслідковувати зміни при введенні
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));//коли виникла зміни, викликається потік
-        }
+    
 
         public override string ToString()//Перевизначення методу для подальшого відображення у графічному інтерфейсі
         {

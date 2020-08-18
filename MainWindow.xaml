@@ -8,444 +8,118 @@
     xmlns:local="clr-namespace:FreshFishDesktopMVVM"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
-    Title="Fresh Fish"
-    Height="500"
-    Width="800"
-    WindowStartupLocation="CenterScreen"
-    FontFamily="Lucida Sans"
-    WindowStyle="SingleBorderWindow"
-    FontSize="14"
-    Foreground="White"
-    MinWidth="500"
-    MinHeight="320">
+        Title="Fresh Fish"
+        Height="600"
+        Width="1000"
+        MinWidth="{Binding WindowMinimumWidth}"
+        MinHeight="{Binding WindowMinimumHeight}"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
     <Window.Resources>
-        <Style
-            x:Key="ButtonRoundedCorner"
-            TargetType="Button">
-            <Setter
-                Property="Template">
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate
-                        TargetType="Button">
-                        <Border
-                            Width="30"
-                            Height="30"
-                            CornerRadius="20"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="0">
-                            <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"></ContentPresenter>
+                    <ControlTemplate TargetType="{x:Type Window}">
+
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                            <Grid>
+
+                                <!--Opacity mask for corners on grid-->
+                                <Border x:Name="Container"
+                                        Background="{StaticResource BackgroundVeryLightBrush}"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" />
+
+                                <!-- Window border and dropshadown -->
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=5}"
+                                        Background="{Binding ForegroundLightBrush, FallbackValue=Black}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0"
+                                                          Opacity="0.2" />
+                                    </Border.Effect>
+                                </Border>
+
+                                <!-- The main window content -->
+                                <Grid>
+
+                                    <!-- Corner clipping -->
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}" />
+                                    </Grid.OpacityMask>
+
+                                    <Grid.RowDefinitions>
+                                        <!-- Title Bar -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLenght, FallbackValue=30}" />
+                                        <!-- drop shadow -->
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+
+                                    </Grid.RowDefinitions>
+                                    <!--Title Bar-->
+                                    <Grid Background="#FF014E81"
+                                          Grid.Column="0"
+                                          Panel.ZIndex="1">
+
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Title-->
+                                            <ColumnDefinition Width="*" />
+                                            <!--Window Button-->
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <!--Icon-->
+                                        <Button Style="{StaticResource Hoverless}"
+                                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Command="{Binding MenuCommand}">
+                                            <Image Source="\Image\fish (1).png" />
+                                        </Button>
+                                        <!-- Title -->
+                                        <Viewbox Grid.Column="1"
+                                                 Style="{StaticResource TitelViewbox}">
+                                            <TextBlock FontSize="1"
+                                                       Style="{StaticResource TitelTextBlock}"
+                                                       Text="{Binding RelativeSource= {RelativeSource TemplatedParent}, Path=Title, FallbackValue='Fresh Fish'}" />
+
+                                        </Viewbox>
+                                        <!-- Windosw Bottuns -->
+                                        <StackPanel Grid.Column="2"
+                                                    Orientation="Horizontal">
+                                            <Button Style="{StaticResource ButtonSettings}" />
+                                            <Button Command="{Binding MinimizeCommand}"
+                                                    Style="{StaticResource ButtonMinimaze}" />
+                                            <Button Command="{Binding MaximizeCommand}"
+                                                    Style="{StaticResource ButtonMaximize}" />
+                                            <Button Command="{Binding CloseCommand}"
+                                                    Style="{StaticResource ButtonClose}" />
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                    <!-- Page Content -->
+                                    <Border Grid.Row="2"
+                                            Padding="{Binding InnerContentPadding}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    </Border>
+
+                                </Grid>
+                            </Grid>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Storyboard
-            x:Key="OpenMenu">
-            <DoubleAnimationUsingKeyFrames
-                Storyboard.TargetProperty="(FrameworkElement.Width)"
-                Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame
-                    KeyTime="0"
-                    Value="40" />
-                <EasingDoubleKeyFrame
-                    KeyTime="0:0:0.3"
-                    Value="140" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames
-                Storyboard.TargetProperty="(UIElement.Opacity)"
-                Storyboard.TargetName="MainFrame">
-                <EasingDoubleKeyFrame
-                    KeyTime="0"
-                    Value="1" />
-                <EasingDoubleKeyFrame
-                    KeyTime="0:0:0.3"
-                    Value="0.5" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard
-            x:Key="CloseMenu">
-            <DoubleAnimationUsingKeyFrames
-                Storyboard.TargetProperty="(FrameworkElement.Width)"
-                Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame
-                    KeyTime="0"
-                    Value="140" />
-                <EasingDoubleKeyFrame
-                    KeyTime="0:0:0.4"
-                    Value="40" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames
-                Storyboard.TargetProperty="(UIElement.Opacity)"
-                Storyboard.TargetName="MainFrame">
-                <EasingDoubleKeyFrame
-                    KeyTime="0"
-                    Value="0" />
-                <EasingDoubleKeyFrame
-                    KeyTime="0:0:0.4"
-                    Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </Window.Resources>
-    <Grid
-        Background="#FFF0F0F0">
-        <Grid>
-            <Frame
-                Content="{Binding CurrentPage}"
-                Name="MainFrame"
-                Margin="40 30 0 0"
-                NavigationUIVisibility="Hidden"></Frame>
-            <Grid
-                x:Name="GridMenu"
-                HorizontalAlignment="Left"
-                Width="40"
-                Margin="0 30 0 0"
-                Background="#FF7EC3E9"
-                Opacity="0.95">
-                <StackPanel
-                    HorizontalAlignment="Left"
-                    Width="180"
-                    VerticalAlignment="Top"
-                    Height="50">
-                    <StackPanel
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Height="30"
-                        Width="30"
-                        Margin="5">
-                        <Border
-                            Name="BordermenuOpen"
-                            CornerRadius="20"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="1"
-                            Background="White">
-                            <Button
-                                x:Name="ButtonOpenMenu"
-                                BorderBrush="{x:Null}"
-                                Background="{x:Null}"
-                                Height="25"
-                                Width="25"
-                                Foreground="#FF014E81"
-                                >
-                                <materialDesign:PackIcon
-                                    Kind="Menu"
-                                    Margin=" -13 -10"
-                                    Height="20"
-                                    Width="20" />
-                            </Button>
-                        </Border>
-                        <Border
-                            Name="BordermenuClose"
-                            CornerRadius="20"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="1"
-                            Background="White"
-                            Margin="0"
-                            Visibility="Collapsed">
-                            <Button
-                                x:Name="ButtonCloseMenu"
-                                BorderBrush="{x:Null}"
-                                Background="{x:Null}"
-                                Height="25"
-                                Width="25"
-                                Foreground="#FF014E81"
-                               >
-                                <materialDesign:PackIcon
-                                    Kind="KeyboardArrowLeft"
-                                    Margin=" -13 -10"
-                                    Height="20"
-                                    Width="20" />
-                            </Button>
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-                <ListView
-                    Name="ListViewMenu"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    SelectedIndex="{Binding Index}"
-                    Margin="0 60 0 0 "
-                    Width="140"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    >
-                    <ListViewItem
-                        Margin="0 0 0 0"
-                        Height="35">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Margin="-3 -6 0 -6">
-                            <Button
-                                Command="{Binding OpenWorkersPage}"
-                                Background="White"
-                                Style="{StaticResource ButtonRoundedCorner}">
-                                <materialDesign:PackIcon
-                                    Kind="Worker"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="1.5 2 1.5 2"
-                                    VerticalAlignment="Center"
-                                    Foreground="#FF014E81" />
-                            </Button>
-                            <Border
-                                Background="White"
-                                Height="30"
-                                Width="85"
-                                Margin="7 0 0 0"
-                                CornerRadius="15">
-                                <TextBlock
-                                    Text="Breeding"
-                                    VerticalAlignment="Center"
-                                    Margin="14 4 0  0"
-                                    Height="20"
-                                    Foreground="#FF014E81" />
-                            </Border>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem
-                        Margin="0 0 0 0"
-                        Height="35">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Margin="-3 -6 0 -6">
-                            <Button
-                                Command="{Binding OpenProductsPage}"
-                                Background="White"
-                                Style="{StaticResource ButtonRoundedCorner}">
-                                <materialDesign:PackIcon
-                                    Kind="Fish"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="1.5 2 1.5 2"
-                                    VerticalAlignment="Center"
-                                    Foreground="#FF014E81" />
-                            </Button>
-                            <Border
-                                Background="White"
-                                Height="30"
-                                Width="85"
-                                Margin="7 0 0 0"
-                                CornerRadius="15">
-                                <TextBlock
-                                    Text="Breeding"
-                                    VerticalAlignment="Center"
-                                    Margin="14 4 0  0"
-                                    Height="20"
-                                    Foreground="#FF014E81" />
-                            </Border>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem
-                        Margin="0 0 0 0"
-                        Height="35">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Margin="-3 -6 0 -6">
-                            <Button
-                                Command="{Binding OpenIncomePage}"
-                                Background="White"
-                                Style="{StaticResource ButtonRoundedCorner}">
-                                <materialDesign:PackIcon
-                                    Kind="Dollar"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="1.5 2 1.5 2"
-                                    VerticalAlignment="Center"
-                                    Foreground="#FF014E81" />
-                            </Button>
-                            <Border
-                                Background="White"
-                                Height="30"
-                                Width="85"
-                                Margin="7 0 0 0"
-                                CornerRadius="15">
-                                <TextBlock
-                                    Text="Breeding"
-                                    VerticalAlignment="Center"
-                                    Margin="14 4 0  0"
-                                    Height="20"
-                                    Foreground="#FF014E81" />
-                            </Border>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem
-                        Margin="0 0 0 0"
-                        Height="35">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Margin="-3 -6 0 -6">
-                            <Button
-                                Command="{Binding OpenChartsPage}"
-                                Background="White"
-                                Style="{StaticResource ButtonRoundedCorner}">
-                                <materialDesign:PackIcon
-                                    Kind="ChartAreaspline"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="1.5 2 1.5 2"
-                                    VerticalAlignment="Center"
-                                    Foreground="#FF014E81" />
-                            </Button>
-                            <Border
-                                Background="White"
-                                Height="30"
-                                Width="85"
-                                Margin="7 0 0 0"
-                                CornerRadius="15">
-                                <TextBlock
-                                    Text="Breeding"
-                                    VerticalAlignment="Center"
-                                    Margin="14 4 0  0"
-                                    Height="20"
-                                    Foreground="#FF014E81" />
-                            </Border>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem
-                        Margin="0 0 0 0"
-                        Height="35">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Margin="-3 -6 0 -6">
-                            <Button
-                                Command="{Binding OpenFishBreedingPage}"
-                                Background="White"
-                                Style="{StaticResource ButtonRoundedCorner}">
-                                <materialDesign:PackIcon
-                                    Kind="Fishbowl"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="1.5 2 1.5 2"
-                                    VerticalAlignment="Center"
-                                    Foreground="#FF014E81" />
-                            </Button>
-                            <Border
-                                Background="White"
-                                Height="30"
-                                Width="85"
-                                Margin="7 0 0 0"
-                                CornerRadius="15">
-                                <TextBlock
-                                    Text="Breeding"
-                                    VerticalAlignment="Center"
-                                    Margin="14 4 0  0"
-                                    Height="20"
-                                    Foreground="#FF014E81" />
-                            </Border>
-                        </StackPanel>
-                    </ListViewItem>
- 
-                </ListView>
-            </Grid>
-            <Grid
-                Name="Grid_move"
-                Height="30"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Top"
-                Background="#FF014E81">
-                <StackPanel
-                    HorizontalAlignment="Left"
-                    Width="120"
-                    VerticalAlignment="Stretch"
-                    Orientation="Horizontal">
-                    <materialDesign:PackIcon
-                        Margin="2"
-                        Kind="Fish"
-                        HorizontalAlignment="Left"
-                        Width="25"
-                        Height="25" />
-                    <TextBlock
-                        Margin="2"
-                        Text="Fresh Fish"
-                        HorizontalAlignment="Right"
-                        Height="20"
-                        FontSize="14" />
-                </StackPanel>
-                <StackPanel
-                    Width="45"
-                    Height="30"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top">
-                    <Button
-                        Name="Button_close"
-                        Height="28"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        >
-                        <materialDesign:PackIcon
-                            Kind="Close" />
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    x:Name="fullscreenOn"
-                    Width="45"
-                    Height="30"
-                    Margin="0 0 35 0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top">
-                    <Button
-                        Name="buttonFullscreenon"
-                        Height="28"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        >
-                        <materialDesign:PackIcon
-                            Kind="Fullscreen" />
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Name="offfullscreen"
-                    Width="45"
-                    Height="30"
-                    Margin="0 0 35 0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Visibility="Collapsed">
-                    <Button
-                        Name="buttonFullscreenoff"
-                        Height="28"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                       >
-                        <materialDesign:PackIcon
-                            Kind="FullscreenExit" />
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Width="45"
-                    Height="30"
-                    Margin="0 0 70 0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top">
-                    <Button
-                        Name="buttonminimize"
-                        Height="28"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        >
-                        <materialDesign:PackIcon
-                            Kind="WindowMinimize" />
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Width="48"
-                    Height="30"
-                    Margin="0,0,100,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top">
-                    <Button
-                        x:Name="ButtonSetting"
-                        Height="28"
-                        Width="48"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}">
-                        <materialDesign:PackIcon
-                            Kind="Settings" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Grid>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"
+                      CaptionHeight="{Binding TitleHeight}"
+                      GlassFrameThickness="0"
+                      CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Frame NavigationUIVisibility="Hidden"
+               x:Name="MainFrame" />
     </Grid>
 </Window>
