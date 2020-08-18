@@ -20,14 +20,12 @@
         </Grid.ColumnDefinitions>
 
         <m:Map CredentialsProvider="AttsGkqIHCOIEA11KtQZDphl5bi8lppin64jeg-ZOOhiS4cdHA_EXJwHSbyZi4Xo"
+               Culture="uk-UA"
                x:Name="MyMap"
                Mode="Road"
                Grid.ColumnSpan="2"
-               Grid.Row="1"
                ZoomLevel="6"
-               Center="48.5238000, 30.4546600">
-            
-        </m:Map>
+               Center="48.5238000, 30.4546600" />
 
         <ProgressBar Grid.Column="1"
                      Name="LoadingBar"
