@@ -274,7 +274,7 @@
                                   Height="35">
                         <StackPanel Orientation="Horizontal"
                                     Margin="-3 -6 0 -6">
-                            <Button 
+                            <Button Command="{Binding OpenDeliveryPage}"
                                     Background="White"
                                     Style="{StaticResource ButtonRoundedCorner}">
                                 <materialDesign:PackIcon Kind="Truck"

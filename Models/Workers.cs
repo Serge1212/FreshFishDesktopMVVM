@@ -86,11 +86,18 @@ namespace FreshFishDesktopMVVM.Models
                 else if (result != null)
                     WorkersErrorCollection.Add(columnName, result);//Якщо колекція ще не має такого ключа - додати і ключ, і текст помилки
 
-                OnPropertyChanged("WorkersErrorCollection");//Поле WorkersErrorCollection підписалось на подію OnPropertyChanged
+                if (result != null)
+                {
+                    CanSave = false;
+                }
+                else
+                {
+                    CanSave = true;
+                }
 
-                if (result != null)//якщо в полі result є помилка, показати в повідомленні "!"
-                    return "!";
-                else return "";//Якщо ні - нічого не показувати
+                OnPropertyChanged("WorkersErrorCollection");
+
+                return result == null ? string.Empty : "!";
             }
         }
         #endregion
@@ -103,6 +110,19 @@ namespace FreshFishDesktopMVVM.Models
         private string phonenumber;
         private string address;
         private string additioninfo;
+        private bool canSave;
+        public bool CanSave
+        {
+            get
+            {
+                return canSave;
+            }
+            set
+            {
+                canSave = value;
+                OnPropertyChanged("CanSave");
+            }
+        }
 
         public string W_id
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreshFishDesktopMVVM.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace FreshFishDesktopMVVM.Models
 {
-    public class Products : INotifyPropertyChanged, IDataErrorInfo
+    public class Products : ObservableObject, IDataErrorInfo
     {
         public string Error { get { return null; } }
 
@@ -143,12 +144,6 @@ namespace FreshFishDesktopMVVM.Models
                 OnPropertyChanged("Status");
                 statusChanged = true;
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -12,7 +12,7 @@ namespace FreshFishDesktopMVVM.Helpers
 {
     public class WorkersHelper
     {
-        FirebaseClient client = new FirebaseClient("https://freshfish-bf927.firebaseio.com");//поле для зв'язку з віддаленим сервером Firebase
+        public FirebaseClient client = new FirebaseClient("https://freshfish-bf927.firebaseio.com");//поле для зв'язку з віддаленим сервером Firebase
 
         //отримання всіх даних працівників з серверу
         public async Task<List<Workers>> GetAllWorkersAsync()

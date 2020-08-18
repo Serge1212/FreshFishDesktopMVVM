@@ -19,6 +19,7 @@ namespace FreshFishDesktopMVVM.ViewModels
         private Page IncomePage;
         private Page ChartsPage;
         private Page BreedingPage;
+        private Page DeliveryPage;
         private Page _currentPage;
         public Page CurrentPage
         {
@@ -51,7 +52,7 @@ namespace FreshFishDesktopMVVM.ViewModels
             IncomePage = new Views.Pages.IncomePage();
             ChartsPage = new Views.Pages.ChartsPage();
             BreedingPage = new Views.Pages.FishBreedingPage();
-
+            DeliveryPage = new DeliveryPage();
             CurrentPage = WorkersPage;
             Index = 0;
         }
@@ -115,6 +116,18 @@ namespace FreshFishDesktopMVVM.ViewModels
                 {
                     CurrentPage = BreedingPage;
                     Index = 4;
+                });
+            }
+        }
+        private RelayCommand openDeliveryPage;
+        public RelayCommand OpenDeliveryPage
+        {
+            get
+            {
+                return openDeliveryPage ??= new RelayCommand((obj) =>
+                {
+                    CurrentPage = DeliveryPage;
+                    Index = 5;
                 });
             }
         }
