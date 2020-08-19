@@ -6,6 +6,6 @@ namespace FreshFishDesktopMVVM.Interfaces
 {
     public interface IClosable
     {
-        void Close();
+        public Action Close { get; set; }
     }
 }

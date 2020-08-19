@@ -15,7 +15,8 @@
     Foreground="White"
     Height="450"
     Width="400"
-    ResizeMode="NoResize">
+    ResizeMode="NoResize"
+    Loaded="Window_Loaded">
     <WindowChrome.WindowChrome>
         <WindowChrome
             CaptionHeight="0"

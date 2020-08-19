@@ -16,7 +16,7 @@ namespace FreshFishDesktopMVVM.Views
     /// <summary>
     /// Interaction logic for SelectedProduct.xaml
     /// </summary>
-    public partial class SelectedProductWindow : Window, IClosable
+    public partial class SelectedProductWindow : Window
     {
         public SelectedProductWindow()
         {
@@ -25,12 +25,22 @@ namespace FreshFishDesktopMVVM.Views
 
         private void Button_close_Click(object sender, RoutedEventArgs e)
         {
-            Close();
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(DataContext is IClosable c)
+            {
+                c.Close += () =>
+                {
+                    Close();
+                };
+            }
         }
     }
 }

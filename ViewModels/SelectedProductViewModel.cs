@@ -1,7 +1,9 @@
 ﻿using FreshFishDesktopMVVM.Helpers;
+using FreshFishDesktopMVVM.Interfaces;
 using FreshFishDesktopMVVM.Models;
 using FreshFishDesktopMVVM.Utilities;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,13 +13,14 @@ using System.Windows.Forms;
 
 namespace FreshFishDesktopMVVM.ViewModels
 {
-    public class SelectedProductViewModel : ObservableObject
+    public class SelectedProductViewModel : ObservableObject, IClosable
     {
         #region Fields  
         private ProductHelper productsHelper = new ProductHelper();
         private bool edited = true;
         public bool isDeleteButtonHidden { get; set; }
         private Products _selectedProduct;
+        public Action Close { get; set; }
         #endregion
 
         #region Properties
@@ -60,6 +63,7 @@ namespace FreshFishDesktopMVVM.ViewModels
         #region Helpers
         private async void SaveProduct(object obj)
         {
+            Close?.Invoke();
             if (edited == false)
             {
                 await productsHelper.AddProduct(
@@ -80,7 +84,6 @@ namespace FreshFishDesktopMVVM.ViewModels
             }
             
         }
-
         #endregion
         public SelectedProductViewModel(Products product = null)
         {
